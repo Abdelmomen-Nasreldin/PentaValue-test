@@ -1,0 +1,26 @@
+.inValid, .inValid:focus{
+    /* background: #f5383842 !important; */
+    border: 1px solid #f53838fa !important;
+    box-shadow: none !important;
+}
+.valid, .valid:focus{
+    border: 1px solid #38f561e7 !important;
+    box-shadow: none !important;
+}
+
+.auth{   
+    margin: auto;
+    display: flex;
+    justify-content:center;
+    align-items:center;
+    height:calc(100vh - 100px);
+    max-width: 500px;
+    /* background-color: #ccc; */
+}
+form{
+    width: 100%;
+    padding: 40px 20px;
+    background-color: #212529;
+    border-radius:20px;margin: 0 10px;
+    color: #fff;
+}
