@@ -18,7 +18,7 @@ const isFormValid = isEmailValid && isPasswordValid
   };
   return (
     <div className={`${classes.auth}`}>
-      <form>
+      <form className={classes.auth__form}>
         <div className="mb-3">
           <label htmlFor="exampleInputEmail1" className="form-label">
             Email address

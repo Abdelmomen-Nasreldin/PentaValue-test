@@ -17,7 +17,7 @@
     max-width: 500px;
     /* background-color: #ccc; */
 }
-form{
+.auth__form{
     width: 100%;
     padding: 40px 20px;
     background-color: #212529;
