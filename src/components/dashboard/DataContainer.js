@@ -3,8 +3,8 @@ import classes from "./DataContainer.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import { dataActions } from "../../store/data";
 import DataCard from "./DataCard";
-import { formObjActions } from './../../store/formObject';
-const DataContainer = ({setModalShow, setChangeType}) => {
+import { editIdActions } from '../../store/edit-Id-handler';
+const DataContainer = ({setModalShow, setAddEditSwitch}) => {
   const data = useSelector((state) => state.data.items);
     const dispatch = useDispatch()
 
@@ -12,9 +12,9 @@ const DataContainer = ({setModalShow, setChangeType}) => {
     dispatch(dataActions.RemoveFromData(id))
   }
   const editHandler =(id)=>{
-    dispatch(formObjActions.getFormObj(id))
+    dispatch(editIdActions.idObjHandler(id))
     setModalShow(true)
-    setChangeType('edit')
+    setAddEditSwitch('edit')
   }
   return (
     <div className={`${classes.data__container}`}>

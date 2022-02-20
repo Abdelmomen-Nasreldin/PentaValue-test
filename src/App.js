@@ -14,7 +14,7 @@ function App() {
   let token = localStorage.getItem("token");
   const dispatch = useDispatch();
   const [modalShow, setModalShow] = useState(false);
-  const [changeType, setChangeType] = useState("");
+  const [addEditSwitch, setAddEditSwitch] = useState("");
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const data = useSelector((state) => state.data.items);
   const dataChanged = useSelector((state) => state.data.itemsChange);
@@ -38,17 +38,17 @@ function App() {
   }, [data]);
   return (
     <div className="App">
-      <Header setModalShow={setModalShow} setChangeType={setChangeType} />
+      <Header setModalShow={setModalShow} setAddEditSwitch={setAddEditSwitch} />
       <CardModal
         show={modalShow}
         onHide={() => setModalShow(false)}
-        changeType={changeType}
+        addEditSwitch={addEditSwitch}
       />
       {!isAuthenticated && <AuthPhone />}
       {isAuthenticated && data && (
         <DataContainer
           setModalShow={setModalShow}
-          setChangeType={setChangeType}
+          setAddEditSwitch={setAddEditSwitch}
         />
       )}
       ;

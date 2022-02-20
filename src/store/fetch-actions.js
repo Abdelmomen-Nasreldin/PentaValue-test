@@ -1,6 +1,9 @@
 import axios from "axios";
 import { dataActions } from "./data";
 
+///////////////////////////////////////////////////
+// Fetch the Data from and to firebase Database //
+//////////////////////////////////////////////////
 export const fetchData = () => {
   return (dispatch) => {
     axios
@@ -17,7 +20,6 @@ export const fetchData = () => {
           };
           convertedData.push(newFormat);
         }
-        console.log(convertedData);
         dispatch(dataActions.setData(convertedData));
       })
       .catch((error) => console.log(error))
@@ -27,7 +29,6 @@ export const fetchData = () => {
 
 export const putData = (lastUpdate) => {
   return (dispatch) => {
-    console.log('we');
     let convertedData = []
     for (const key in lastUpdate) {
       let newFormat = {
@@ -39,8 +40,6 @@ export const putData = (lastUpdate) => {
       };
       convertedData.push(newFormat);
     }
-    console.log(convertedData);
-    console.log('we');
     axios.put("https://pentavalue-2a41c-default-rtdb.firebaseio.com/show.json", convertedData ).then((response) => {
       console.log(response)
     }).catch((error) => {console.log(error)})

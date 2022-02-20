@@ -1,4 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
+
+///////////////////////////////////
+// CRUD operations on the Data //
+//////////////////////////////////
+
 const dataInitialState = {items: [], itemsChange: false};
 const dataSlice = createSlice({
   name: "data",

@@ -3,7 +3,7 @@ import { Container, Nav, Navbar } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../../store/auth";
 
-const Header = ({setModalShow, setChangeType}) => {
+const Header = ({setModalShow, setAddEditSwitch}) => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const dispatch = useDispatch();
   const logoutHandler = () => {
@@ -11,7 +11,7 @@ const Header = ({setModalShow, setChangeType}) => {
   };
   const createCardHandler =()=>{
     setModalShow(true)
-    setChangeType('add')
+    setAddEditSwitch('add')
   }
   return (
     <div>

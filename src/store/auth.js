@@ -1,5 +1,9 @@
 import {createSlice} from '@reduxjs/toolkit'
 
+///////////////////////////////////////
+// Login and Logout Authentication //
+//////////////////////////////////////
+
 const authInitialState = {isAuthenticated: false, token: null}
 const authSlice = createSlice({
     name: 'authentication',

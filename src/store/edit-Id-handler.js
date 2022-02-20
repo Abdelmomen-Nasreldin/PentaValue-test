@@ -2,13 +2,13 @@ import { createSlice } from '@reduxjs/toolkit'
 ////////////////////////////////////////////////////
 // It is just the ID of the object wanna Editing //
 ///////////////////////////////////////////////////
-const intialFormObjState = {id:0}
+const intialId = {id:0}
 
-const formObjSlice = createSlice({
-    name: "formObj",
-    initialState: intialFormObjState,
+const editIdObjHandler = createSlice({
+    name: "EditingIdObjHandler",
+    initialState: intialId,
     reducers: {
-        getFormObj(state,action){
+        idObjHandler(state,action){
             const objId = action.payload
             let newState = {...state}
             newState = {id : objId}
@@ -16,5 +16,5 @@ const formObjSlice = createSlice({
         }
     }
 })
-export const formObjActions = formObjSlice.actions
-export default formObjSlice.reducer
+export const editIdActions = editIdObjHandler.actions
+export default editIdObjHandler.reducer

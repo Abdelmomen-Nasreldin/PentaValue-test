@@ -11,15 +11,15 @@ const CardModal = (props) => {
       centered
     >
       <Modal.Header closeButton>
-        {props.changeType === "add" && (
+        {props.addEditSwitch === "add" && (
           <Modal.Title id="contained-modal-title-vcenter">ADD CARD</Modal.Title>
         )}
-        {props.changeType === "edit" && (
+        {props.addEditSwitch === "edit" && (
           <Modal.Title id="contained-modal-title-vcenter">EDIT CARD</Modal.Title>
         )}
       </Modal.Header>
       <Modal.Body>
-        <FormModal changeType={props.changeType} />
+        <FormModal addEditSwitch={props.addEditSwitch} />
       </Modal.Body>
       <Modal.Footer>
         <Button onClick={props.onHide}>Close</Button>

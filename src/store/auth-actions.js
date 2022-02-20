@@ -2,9 +2,9 @@ import { authActions } from "./auth";
 import { authentication } from "../firebase-config";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 
-///////////////////////////////////////////////
-// mobile phone verification using firebase //
-//////////////////////////////////////////////
+//////////////////////////////////////////
+// mobile verification using firebase //
+/////////////////////////////////////////
 
 const generateRecaptcha = () => {
     window.recaptchaVerifier = new RecaptchaVerifier(
@@ -26,9 +26,8 @@ export const requestOTP = (phone) => {
     signInWithPhoneNumber(authentication, phone, appVerifier)
       .then((confirmationResult) => {
         window.confirmationResult = confirmationResult;
-        console.log(confirmationResult);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => alert("invalid number, please reload the page and try again"));
   };
 };
 export const verifyOTP = (otp) => {
@@ -46,6 +45,8 @@ export const verifyOTP = (otp) => {
           // User couldn't sign in (bad verification code?)
           console.log("error");
         });
+    }else{
+      alert("wrong OTP")
     }
   };
 };
