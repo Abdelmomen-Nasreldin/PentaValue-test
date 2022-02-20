@@ -2,7 +2,6 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import classes from "./FormModal.module.css";
-import { formObjActions } from "./../../store/formObject";
 import { dataActions } from "./../../store/data";
 const FormModal = ({ changeType }) => {
   const objEditId = useSelector((state) => state.formObj.id);
@@ -13,7 +12,8 @@ const FormModal = ({ changeType }) => {
     console.log(data);
     let newObj = {
       id: 0,
-      image: (data.image[0])? (data.image[0].name): "",
+      image: (data.image[0])? (data.image[0].name): "https://www.bestmobile.pk/mobile-wallpapers/img_320x480/1528970958_320x480_pexels-photo-1144699.jpeg"
+      ,
       video: "",
       from: data.from,
       to: data.to,
@@ -24,9 +24,9 @@ const FormModal = ({ changeType }) => {
     } 
     if (changeType === "edit") {
       let newUpdate = {};
-      if (newObj.image) {
-        newUpdate = { ...newUpdate, image: newObj.image };
-      }
+      // if (newObj.image) {
+      //   newUpdate = { ...newUpdate, image: newObj.image };
+      // }
       if (newObj.video) {
         newUpdate = { ...newUpdate, video: newObj.video };
       }

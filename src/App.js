@@ -1,42 +1,57 @@
 import "./App.css";
-import Auth from "./components/login/Auth";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
-import axios from "axios";
-import { dataActions } from "./store/data";
 import DataContainer from "./components/dashboard/DataContainer";
 import Header from "./components/dashboard/Header";
 import CardModal from "./components/dashboard/CardModal";
-import { fetchData, putData } from './store/fetch-actions';
+import { fetchData, putData } from "./store/fetch-actions";
+import { authActions } from "./store/auth";
+import AuthPhone from "./components/login/AuthPhone";
+
 let firstTime = true;
+
 function App() {
+  let token = localStorage.getItem("token");
+  const dispatch = useDispatch();
   const [modalShow, setModalShow] = useState(false);
-  const [changeType, setChangeType] = useState('');
+  const [changeType, setChangeType] = useState("");
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const data = useSelector((state) => state.data.items);
   const dataChanged = useSelector((state) => state.data.itemsChange);
+  if (token) {
+    dispatch(authActions.login(token));
+  }
 
-  const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchData())
+    dispatch(fetchData());
   }, [dispatch]);
-useEffect(()=>{
-  if(firstTime){
-    firstTime = false;
-    return;
-  }
-  if (dataChanged) {
-    dispatch(putData(data))
-  }
-  
-// eslint-disable-next-line react-hooks/exhaustive-deps
-},[data])
+  useEffect(() => {
+    if (firstTime) {
+      firstTime = false;
+      return;
+    }
+    if (dataChanged) {
+      dispatch(putData(data));
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
   return (
     <div className="App">
-      <Header setModalShow={setModalShow} setChangeType={setChangeType}/>
-      <CardModal show={modalShow} onHide={() => setModalShow(false)} changeType={changeType}/>
-      {/* {!isAuthenticated && <Auth />} */}
-      {!isAuthenticated && data && <DataContainer setModalShow={setModalShow} setChangeType={setChangeType}/>};
+      <Header setModalShow={setModalShow} setChangeType={setChangeType} />
+      <CardModal
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+        changeType={changeType}
+      />
+      {!isAuthenticated && <AuthPhone />}
+      {isAuthenticated && data && (
+        <DataContainer
+          setModalShow={setModalShow}
+          setChangeType={setChangeType}
+        />
+      )}
+      ;
     </div>
   );
 }
