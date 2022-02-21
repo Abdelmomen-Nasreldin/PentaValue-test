@@ -31,8 +31,8 @@ export const requestOTP = (phone) => {
         console.log("Confirmation Done!");
       })
       .catch((error) => {
-        // alert("invalid number, please reload the page and try again");
-        console.log(error);
+        alert("invalid number, please reload the page and try again");
+        // console.log(error);
       });
   };
 };

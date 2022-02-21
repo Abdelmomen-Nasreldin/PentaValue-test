@@ -1,53 +1,28 @@
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import classes from "./FormModal.module.css";
 import { dataActions } from "./../../store/data";
-import { getDownloadURL, ref, uploadBytesResumable } from "@firebase/storage";
-import { storage } from "../../firebase-config";
+import useFileUploader from './../../hooks/file-upload';
 
 
 const FormModal = ({ addEditSwitch }) => {
+  const [progress, fileUrl, fileUpload] = useFileUploader()
   const dispatch = useDispatch();
   const objEditId = useSelector((state) => state.EditingIdObjHandler.id);
-  const [progress, setProgress] = useState(0);
-  const [imgUrl , setImgUrl] = useState()
+ 
   const { register, handleSubmit } = useForm();
   
-  ////////////////////////////
-  const uploadFiles = (file) => {
-    if (!file) return;
-    const sotrageRef = ref(storage, `files/${file.name}`);
-    const uploadTask = uploadBytesResumable(sotrageRef, file);
-
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const prog = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-        setProgress(prog);
-      },
-      (error) => console.log(error),
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          console.log("File available at", downloadURL);
-          setImgUrl(downloadURL)
-        });
-      }
-    );
-  };
-  /////////////////////////////////
   const fileHandler = (e) => {
     e.preventDefault();
     const file = e.target[0].files[0];
-    uploadFiles(file);
+    fileUpload(file);
   };
   ///////////////////////////////
   const onSubmit = (data) => {
     let newObj = {
       id: 0,
-      image: imgUrl ,
+      image: fileUrl ,
       video: "",
       from: data.from,
       to: data.to,
