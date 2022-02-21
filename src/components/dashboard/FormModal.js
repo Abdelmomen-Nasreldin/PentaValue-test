@@ -1,19 +1,53 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import classes from "./FormModal.module.css";
 import { dataActions } from "./../../store/data";
-const FormModal = ({ addEditSwitch }) => {
-  const objEditId = useSelector((state) => state.EditingIdObjHandler.id);
+import { getDownloadURL, ref, uploadBytesResumable } from "@firebase/storage";
+import { storage } from "../../firebase-config";
 
+
+const FormModal = ({ addEditSwitch }) => {
   const dispatch = useDispatch();
+  const objEditId = useSelector((state) => state.EditingIdObjHandler.id);
+  const [progress, setProgress] = useState(0);
+  const [imgUrl , setImgUrl] = useState()
   const { register, handleSubmit } = useForm();
+  
+  ////////////////////////////
+  const uploadFiles = (file) => {
+    if (!file) return;
+    const sotrageRef = ref(storage, `files/${file.name}`);
+    const uploadTask = uploadBytesResumable(sotrageRef, file);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const prog = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        setProgress(prog);
+      },
+      (error) => console.log(error),
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          console.log("File available at", downloadURL);
+          setImgUrl(downloadURL)
+        });
+      }
+    );
+  };
+  /////////////////////////////////
+  const fileHandler = (e) => {
+    e.preventDefault();
+    const file = e.target[0].files[0];
+    uploadFiles(file);
+  };
+  ///////////////////////////////
   const onSubmit = (data) => {
     let newObj = {
       id: 0,
-      image: data.image[0]
-        ? data.image[0].name
-        : "https://www.bestmobile.pk/mobile-wallpapers/img_320x480/1528970958_320x480_pexels-photo-1144699.jpeg",
+      image: imgUrl ,
       video: "",
       from: data.from,
       to: data.to,
@@ -24,9 +58,9 @@ const FormModal = ({ addEditSwitch }) => {
     }
     if (addEditSwitch === "edit") {
       let newUpdate = {};
-      // if (newObj.image) {
-      //   newUpdate = { ...newUpdate, image: newObj.image };
-      // }
+      if (newObj.image) {
+        newUpdate = { ...newUpdate, image: newObj.image };
+      }
       if (newObj.video) {
         newUpdate = { ...newUpdate, video: newObj.video };
       }
@@ -40,15 +74,22 @@ const FormModal = ({ addEditSwitch }) => {
     }
   };
   return (
-    <form
-      className={`${classes.modal__form}`}
-      onSubmit={handleSubmit(onSubmit)}
-    >
-      <input type="file" {...register("image")} defaultValue="" />
-      <input type="datetime-local" {...register("from")} />
-      <input type="datetime-local" {...register("to")} />
-      <input type="submit" />
-    </form>
+    <>
+      <form onSubmit={fileHandler}>
+        <input type="file" className="input" />
+        <button type="submit">Upload</button>
+      </form>
+      <h6>Uploading done {progress}%</h6>
+      <hr />
+      <form
+        className={`${classes.modal__form}`}
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <input type="datetime-local" {...register("from")} />
+        <input type="datetime-local" {...register("to")} />
+        <input type="submit" />
+      </form>
+    </>
   );
 };
 

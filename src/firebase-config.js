@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-
+import { getStorage } from 'firebase/storage';
 // TODO: Replace the following with your app's Firebase project configuration
 import { getAuth } from "firebase/auth";
 const firebaseConfig = {
@@ -14,3 +14,4 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 export const authentication = getAuth(app)
+export const storage = getStorage(app)

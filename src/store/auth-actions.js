@@ -28,6 +28,7 @@ export const requestOTP = (phone) => {
     signInWithPhoneNumber(authentication, phone, appVerifier)
       .then((confirmationResult) => {
         window.confirmationResult = confirmationResult;
+        console.log("Confirmation Done!");
       })
       .catch((error) => {
         // alert("invalid number, please reload the page and try again");
