@@ -11,9 +11,9 @@ const AuthPhone = () => {
 
   const requestOtp = (e) => {
     e.preventDefault();
-    let phone = phoneRef.current.value;
-      setExpand(true);
+    let phone = phoneRef.current.value; 
     dispatch(requestOTP(phone));   
+    setExpand(true);
   };
 
   const verifyOtp = () => {
@@ -49,7 +49,7 @@ const AuthPhone = () => {
           {expand && <input  className={`mx-2 `} type="text" ref={otpRef} />}
           {expand && <button className="btn btn-success" onClick={verifyOtp}>verify OTP</button>}     
         </div>
-        <div id="replica-container"></div>
+        <div className="m-3" id="replica-container"></div>
       </div>
     </div>
   );

@@ -7,27 +7,32 @@ import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 /////////////////////////////////////////
 
 const generateRecaptcha = () => {
-    window.recaptchaVerifier = new RecaptchaVerifier(
-      "replica-container",
-      {
-        size: "invisible",
-        callback: (response) => {
-          // reCAPTCHA solved, allow signInWithPhoneNumber.
-          //   onSignInSubmit();
-        },
+  console.log("Recaptcha")
+  window.recaptchaVerifier = new RecaptchaVerifier(
+    "replica-container",
+    {
+      // size: "invisible",
+      callback: (response) => {
+        // reCAPTCHA solved, allow signInWithPhoneNumber.
+        //   onSignInSubmit();
       },
-      authentication
-    );
+    },
+    authentication
+  );
 };
 export const requestOTP = (phone) => {
   return (dispatch) => {
     generateRecaptcha();
+    console.log("Recaptcha generated")
     let appVerifier = window.recaptchaVerifier;
     signInWithPhoneNumber(authentication, phone, appVerifier)
       .then((confirmationResult) => {
         window.confirmationResult = confirmationResult;
       })
-      .catch((error) => alert("invalid number, please reload the page and try again"));
+      .catch((error) => {
+        // alert("invalid number, please reload the page and try again");
+        console.log(error);
+      });
   };
 };
 export const verifyOTP = (otp) => {
@@ -39,14 +44,14 @@ export const verifyOTP = (otp) => {
         .then((result) => {
           // User signed in successfully.
           const user = result.user;
-          dispatch(authActions.login(user.accessToken))
+          dispatch(authActions.login(user.accessToken));
         })
         .catch((error) => {
           // User couldn't sign in (bad verification code?)
           console.log("error");
         });
-    }else{
-      alert("wrong OTP")
+    } else {
+      alert("wrong OTP");
     }
   };
 };
