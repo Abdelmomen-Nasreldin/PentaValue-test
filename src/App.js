@@ -38,6 +38,7 @@ function App() {
   }, [data]);
   return (
     <div className="App">
+      
       <Header setModalShow={setModalShow} setAddEditSwitch={setAddEditSwitch} />
       <CardModal
         show={modalShow}

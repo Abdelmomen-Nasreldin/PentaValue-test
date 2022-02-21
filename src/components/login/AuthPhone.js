@@ -46,8 +46,8 @@ const AuthPhone = () => {
           <input type="submit" className="btn btn-primary" />
         </form>
         <div className={`d-flex justify-content-around flex-wrap ${classes.verify}`}>
-          {expand && <input  className={`mx-2 `} type="text" ref={otpRef} />}
-          {expand && <button className="btn btn-success" onClick={verifyOtp}>verify OTP</button>}     
+          {expand && <input  className={`m-2`} type="text" ref={otpRef} />}
+          {expand && <button className="btn btn-success my-2" onClick={verifyOtp}>verify OTP</button>}     
         </div>
         <div className="m-3" id="replica-container"></div>
       </div>
