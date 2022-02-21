@@ -1,3 +1,6 @@
+#React-Redux-Firebase
+this project is about an admin page so control the data (CRUD operations) and Authentication using Mobile verfication 
+
 I used a sotre folder to put all the logic in it and make the components dummy as possible and it is the store of course that handle all Redux and Thunk.
 
 in the store folder:
