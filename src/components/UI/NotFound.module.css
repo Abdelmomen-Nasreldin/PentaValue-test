@@ -1,0 +1,9 @@
+.not__found{
+    height: calc(100vh - 56px);
+    background: #000000b8;
+    color: #fff;
+}
+.error{
+    font-size: 75px;
+    font-weight: bold;
+}

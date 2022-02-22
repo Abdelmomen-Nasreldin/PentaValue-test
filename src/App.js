@@ -7,6 +7,8 @@ import CardModal from "./components/dashboard/CardModal";
 import { fetchData, putData } from "./store/fetch-actions";
 import { authActions } from "./store/auth";
 import AuthPhone from "./components/login/AuthPhone";
+import NotFound from "./components/UI/NotFound";
+import LoadingUI from "./components/UI/LoadingUI";
 
 let firstTime = true;
 
@@ -18,6 +20,7 @@ function App() {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const data = useSelector((state) => state.data.items);
   const dataChanged = useSelector((state) => state.data.itemsChange);
+  const loading = useSelector((state) => state.loading.loading)
   if (token) {
     dispatch(authActions.login(token));
   }
@@ -36,6 +39,9 @@ function App() {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
+  if(loading){
+    return <LoadingUI/>
+  }
   return (
     <div className="App">
       
@@ -46,13 +52,13 @@ function App() {
         addEditSwitch={addEditSwitch}
       />
       {!isAuthenticated && <AuthPhone />}
-      {isAuthenticated && data && (
+      {!loading && isAuthenticated && data.length===0 && <NotFound/>}
+      {!loading && isAuthenticated && data.length>0 && (
         <DataContainer
           setModalShow={setModalShow}
           setAddEditSwitch={setAddEditSwitch}
         />
       )}
-      ;
     </div>
   );
 }
